@@ -63,9 +63,7 @@ There is no database, no auth, and no business logic — this is by design.
 ## 8. Tool Protocol  <!-- mcp:code-context | OPTIONAL -->
 
 <!-- Only if you have the `code-context` MCP installed.
-     If not, delete this entire section.
-     If you change tool signatures here, update docs/tool-protocol.md too —
-     the contract test will fail otherwise. -->
+     If not, delete this entire section. -->
 
 You have three tools from the `code-context` MCP server. Use them proactively:
 
