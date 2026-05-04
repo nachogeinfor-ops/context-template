@@ -1,5 +1,9 @@
 # context-template
 
+[![CI](https://github.com/nachogeinfor-ops/context-template/actions/workflows/ci.yml/badge.svg)](https://github.com/nachogeinfor-ops/context-template/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Release](https://img.shields.io/github/v/release/nachogeinfor-ops/context-template?include_prereleases&sort=semver)](https://github.com/nachogeinfor-ops/context-template/releases)
+
 A stack-agnostic OSS template for giving [Claude Code](https://docs.claude.com/claude-code) durable per-repo context: a `CLAUDE.md` skeleton, a `.claude/memory/` structure, and a formal Tool Protocol contract for the optional `code-context` MCP server.
 
 ## What you get
