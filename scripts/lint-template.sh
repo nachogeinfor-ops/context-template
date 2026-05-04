@@ -73,9 +73,11 @@ if [ -d "$MEM_DIR" ]; then
 fi
 
 # 5. Cross-check MEMORY.md links against actual files on disk.
+#    Strip backtick code spans first (so format examples inside `...` are ignored).
 if [ -f "$MEMORY_INDEX" ]; then
-  # Extract markdown links: [text](path.md)
-  mapfile -t refs < <(grep -oE '\]\([^)]+\.md\)' "$MEMORY_INDEX" | sed 's/^\](//; s/)$//')
+  # Extract markdown links: [text](path.md), excluding those inside `code spans`.
+  stripped=$(sed 's/`[^`]*`//g' "$MEMORY_INDEX")
+  mapfile -t refs < <(echo "$stripped" | grep -oE '\]\([^)]+\.md\)' | sed 's/^\](//; s/)$//')
   for ref in "${refs[@]:-}"; do
     [ -z "$ref" ] && continue
     if [ ! -f "$MEM_DIR/$ref" ]; then
