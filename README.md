@@ -15,7 +15,7 @@ The template is **standalone**: useful even if you don't install the MCP server.
 
 ```bash
 # 1. Clone this repo somewhere.
-git clone https://github.com/<you>/context-template.git ~/tools/context-template
+git clone https://github.com/nachogeinfor-ops/context-template.git ~/tools/context-template
 
 # 2. Copy the skeleton into your repo.
 cd /path/to/your/repo
