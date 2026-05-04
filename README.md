@@ -18,20 +18,22 @@ The template is **standalone**: useful even if you don't install the MCP server.
 ## Quickstart (30 seconds)
 
 ```bash
-# 1. Clone this repo somewhere.
+# 1. Clone this repo somewhere once.
 git clone https://github.com/nachogeinfor-ops/context-template.git ~/tools/context-template
 
-# 2. Copy the skeleton into your repo.
+# 2. From your repo root, run the installer.
 cd /path/to/your/repo
-cp ~/tools/context-template/template/CLAUDE.md .
-cp -R ~/tools/context-template/template/.claude .
+bash ~/tools/context-template/install.sh
+#   ✓ Template applied to /path/to/your/repo
 
-# 3. Fill in CLAUDE.md (replace every <PLACEHOLDER>).
+# 3. Fill in CLAUDE.md (replace every <YOUR_*> / <PROJECT_NAME> placeholder).
 
 # 4. Verify.
 bash ~/tools/context-template/scripts/lint-template.sh .
 # → ✓ Template lint passed for .
 ```
+
+`install.sh` refuses to overwrite an existing `CLAUDE.md` or `.claude/`. Use `--force` to overwrite.
 
 Open Claude Code in your repo. The new `CLAUDE.md` is loaded automatically.
 
