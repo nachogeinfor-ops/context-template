@@ -53,3 +53,21 @@ def test_lint_fails_on_bad_fixture(case: str) -> None:
     assert result.returncode != 0, (
         f"Lint should fail on '{case}', got exit 0. Stdout:\n{result.stdout}\nStderr:\n{result.stderr}"
     )
+
+
+@pytest.mark.parametrize(
+    "fixture",
+    ["sample-node-repo", "sample-python-repo"],
+)
+def test_lint_passes_on_sample_fixture(fixture: str) -> None:
+    """The two filled-in sample fixtures must lint cleanly.
+
+    They serve as proof that a fully-filled CLAUDE.md + .claude/memory/
+    passes the lint script.
+    """
+    target = FIXTURES / fixture
+    result = run_lint(target)
+    assert result.returncode == 0, (
+        f"Lint should pass on '{fixture}', got exit {result.returncode}.\n"
+        f"Stdout:\n{result.stdout}\nStderr:\n{result.stderr}"
+    )

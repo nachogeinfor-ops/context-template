@@ -18,6 +18,12 @@
 
 set -euo pipefail
 
+if [ "${BASH_VERSINFO[0]:-0}" -lt 4 ]; then
+  echo "ERROR: lint-template.sh requires bash 4 or later." >&2
+  echo "On macOS the default /bin/bash is 3.2 — install bash 4+ via Homebrew: brew install bash" >&2
+  exit 2
+fi
+
 TARGET="${1:-.}"
 ERRORS=0
 

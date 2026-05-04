@@ -79,9 +79,7 @@ graph LR
 ## 8. Tool Protocol  <!-- mcp:code-context | OPTIONAL -->
 
 <!-- Only if you have the `code-context` MCP installed.
-     If not, delete this entire section.
-     If you change tool signatures here, update docs/tool-protocol.md too —
-     the contract test will fail otherwise. -->
+     If not, delete this entire section. -->
 
 You have three tools from the `code-context` MCP server. Use them proactively:
 
@@ -105,13 +103,13 @@ Prefer these tools over Glob/Grep when the question is semantic
 
 ### External resources
 
-- **Docs:** <link>
-- **Dashboards:** <link>
-- **Issue tracker:** <link>
+- **Docs:** <YOUR_DOCS_LINK>
+- **Dashboards:** <YOUR_DASHBOARDS_LINK>
+- **Issue tracker:** <YOUR_TRACKER_LINK>
 
 ### Dynamic memory
 
 Per-repo memory lives in `.claude/memory/`. Start with `.claude/memory/MEMORY.md` —
 it's the index. The four categories are: `decisions/`, `gotchas/`, `glossary/`,
-`playbooks/`. See [memory-types](docs/memory-types.md) for when to use each.
+`playbooks/`.
 
