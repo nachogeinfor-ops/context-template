@@ -14,11 +14,13 @@
 
 <!-- A diagram (mermaid or ASCII) plus 5-10 sentences explaining the
      main flow of data and control. Mention the major boundaries
-     (modules, services, processes) and how they communicate. -->
+     (modules, services, processes) and how they communicate.
+     Replace the mermaid block below with your own diagram, or remove
+     the fenced block entirely if you prefer prose. -->
 
 ```mermaid
 graph LR
-  A[<Replace with a real diagram>] --> B[<Or remove this fenced block>]
+  A[Start] --> B[End]
 ```
 
 ## 3. Key Directories
@@ -28,17 +30,17 @@ graph LR
 
 | Path | Purpose |
 |---|---|
-| `<path/to/dir>` | <one-line purpose> |
-| `<path/to/dir>` | <one-line purpose> |
+| `<YOUR_DIR_PATH>` | <YOUR_DIR_PURPOSE> |
+| `<YOUR_DIR_PATH>` | <YOUR_DIR_PURPOSE> |
 
 ## 4. Conventions
 
 <!-- Style, naming, testing approach. Link to .editorconfig, eslint
      config, ruff config, etc. instead of duplicating their content. -->
 
-- **Code style:** <e.g. "Black + Ruff" or "Prettier + ESLint">.
-- **Naming:** <e.g. "snake_case for files, PascalCase for classes">.
-- **Tests:** <e.g. "pytest, one test file per source file, AAA layout">.
+- **Code style:** <YOUR_CODE_STYLE>.  <!-- e.g. "Black + Ruff" or "Prettier + ESLint" -->
+- **Naming:** <YOUR_NAMING_CONVENTION>.  <!-- e.g. "snake_case for files, PascalCase for classes" -->
+- **Tests:** <YOUR_TEST_APPROACH>.  <!-- e.g. "pytest, one test file per source file, AAA layout" -->
 
 ## 5. Commands
 
@@ -46,15 +48,15 @@ graph LR
 
 | Command | Purpose |
 |---|---|
-| `<build cmd>` | Build the project. |
-| `<test cmd>` | Run the test suite. |
-| `<lint cmd>` | Run the linter. |
-| `<run cmd>` | Run the application locally. |
+| `<YOUR_BUILD_CMD>` | Build the project. |
+| `<YOUR_TEST_CMD>` | Run the test suite. |
+| `<YOUR_LINT_CMD>` | Run the linter. |
+| `<YOUR_RUN_CMD>` | Run the application locally. |
 
 ## 6. Common Workflows
 
 <!-- "How do I X" recipes. Two or three is enough; more goes in
-     .claude/memory/playbooks/. -->
+     .claude/memory/playbooks/ (see the memory/ scaffold next to this file). -->
 
 ### How to add a feature
 
@@ -67,7 +69,9 @@ graph LR
 ## 7. Anti-Patterns
 
 <!-- What NOT to do in this repo + why. The why is the important part —
-     a rule without a reason invites being ignored. -->
+     a rule without a reason invites being ignored.
+     Example: "Don't commit secrets to the repo — because they persist
+     in history even after deletion." -->
 
-- **Don't <X>** — because <reason>.
-- **Don't <Y>** — because <reason>.
+- **Don't <YOUR_ANTIPATTERN>** — because <YOUR_REASON>.
+- **Don't <YOUR_ANTIPATTERN>** — because <YOUR_REASON>.
