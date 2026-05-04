@@ -1,0 +1,21 @@
+{
+  "name": "sample-node-api",
+  "version": "0.1.0",
+  "description": "Minimal Node fixture for context-template",
+  "main": "src/server.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest",
+    "lint": "eslint src",
+    "dev": "tsx src/server.ts"
+  },
+  "dependencies": {
+    "fastify": "^4.26.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.0",
+    "tsx": "^4.7.0",
+    "vitest": "^1.4.0",
+    "eslint": "^8.57.0"
+  }
+}
