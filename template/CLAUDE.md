@@ -75,3 +75,43 @@ graph LR
 
 - **Don't <YOUR_ANTIPATTERN>** — because <YOUR_REASON>.
 - **Don't <YOUR_ANTIPATTERN>** — because <YOUR_REASON>.
+
+## 8. Tool Protocol  <!-- mcp:code-context | OPTIONAL -->
+
+<!-- Only if you have the `code-context` MCP installed.
+     If not, delete this entire section.
+     If you change tool signatures here, update docs/tool-protocol.md too —
+     the contract test will fail otherwise. -->
+
+You have three tools from the `code-context` MCP server. Use them proactively:
+
+- **`search_repo(query, top_k?, scope?)`** — call this BEFORE editing or reading
+  large amounts of code. The query should describe the task in natural language.
+  Example: search_repo("where do we validate user emails on signup")
+
+- **`recent_changes(since?, paths?, max?)`** — call when the user mentions "recent",
+  "the new", "what changed", or before suggesting changes that might conflict
+  with in-flight work.
+
+- **`get_summary(scope?, path?)`** — call ONCE at the start of an unfamiliar
+  task to orient yourself. Don't call repeatedly.
+
+Prefer these tools over Glob/Grep when the question is semantic
+("how do we do X") rather than literal ("where is the string Y").
+
+## 9. References & Memory
+
+<!-- External links (docs, dashboards, trackers) + pointer to dynamic memory. -->
+
+### External resources
+
+- **Docs:** <link>
+- **Dashboards:** <link>
+- **Issue tracker:** <link>
+
+### Dynamic memory
+
+Per-repo memory lives in `.claude/memory/`. Start with `.claude/memory/MEMORY.md` —
+it's the index. The four categories are: `decisions/`, `gotchas/`, `glossary/`,
+`playbooks/`. See [memory-types](docs/memory-types.md) for when to use each.
+
