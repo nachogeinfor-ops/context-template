@@ -12,6 +12,8 @@ from pathlib import Path
 
 import pytest
 
+# This set is the authoritative declaration of "the contract" — both files
+# (tool-protocol.md and CLAUDE.md §8) must declare exactly these tools.
 EXPECTED_TOOLS = {"search_repo", "recent_changes", "get_summary"}
 
 
@@ -20,6 +22,10 @@ def _parse_params(s: str) -> list[tuple[str, bool]]:
         'query: str, top_k?: int = 5, scope?: str'   (typed, from tool-protocol.md)
         'query, top_k?, scope?'                       (untyped, from CLAUDE.md §8)
     Returns a list of (name, is_optional).
+
+    Limitation: splits on top-level commas only. A type annotation containing
+    a comma (e.g. `dict[str, int]`) would produce spurious entries. None of
+    the current tools use such types; if added, fix the splitter first.
     """
     s = s.strip()
     if not s:
@@ -76,10 +82,12 @@ def test_claude_template_has_expected_tools(claude_template: Path) -> None:
 
 @pytest.mark.parametrize("tool", sorted(EXPECTED_TOOLS))
 def test_param_names_match(tool: str, protocol_doc: Path, claude_template: Path) -> None:
-    p = parse_protocol_doc(protocol_doc)[tool]
-    t = parse_claude_template(claude_template)[tool]
-    p_names = [n for n, _ in p]
-    t_names = [n for n, _ in t]
+    p_tools = parse_protocol_doc(protocol_doc)
+    t_tools = parse_claude_template(claude_template)
+    assert tool in p_tools, f"Tool {tool!r} missing from {protocol_doc.name}"
+    assert tool in t_tools, f"Tool {tool!r} missing from {claude_template.name}"
+    p_names = [n for n, _ in p_tools[tool]]
+    t_names = [n for n, _ in t_tools[tool]]
     assert p_names == t_names, (
         f"Tool {tool}: protocol params {p_names}, template params {t_names}"
     )
@@ -87,10 +95,12 @@ def test_param_names_match(tool: str, protocol_doc: Path, claude_template: Path)
 
 @pytest.mark.parametrize("tool", sorted(EXPECTED_TOOLS))
 def test_optional_markers_match(tool: str, protocol_doc: Path, claude_template: Path) -> None:
-    p = parse_protocol_doc(protocol_doc)[tool]
-    t = parse_claude_template(claude_template)[tool]
-    p_opt = [o for _, o in p]
-    t_opt = [o for _, o in t]
+    p_tools = parse_protocol_doc(protocol_doc)
+    t_tools = parse_claude_template(claude_template)
+    assert tool in p_tools, f"Tool {tool!r} missing from {protocol_doc.name}"
+    assert tool in t_tools, f"Tool {tool!r} missing from {claude_template.name}"
+    p_opt = [o for _, o in p_tools[tool]]
+    t_opt = [o for _, o in t_tools[tool]]
     assert p_opt == t_opt, (
         f"Tool {tool}: protocol optionals {p_opt}, template optionals {t_opt}"
     )
