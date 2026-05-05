@@ -13,6 +13,8 @@ If you change anything here, update `template/CLAUDE.md` §8 as well — the con
 | `get_summary` | `(scope?: "project" \| "module", path?: str)` | `ProjectSummary` |
 | `find_definition` | `(name: str, language?: str, max?: int = 5)` | `SymbolDef[]` |
 | `find_references` | `(name: str, max?: int = 50)` | `SymbolRef[]` |
+| `get_file_tree` | `(path?: str, max_depth?: int = 4, include_hidden?: bool = false)` | `FileTreeNode` |
+| `explain_diff` | `(ref: str, max_chunks?: int = 50)` | `DiffChunk[]` |
 
 ### `search_repo`
 
@@ -51,6 +53,25 @@ List every textual occurrence of a named symbol in the indexed corpus. Returns m
 
 - `name` (required): exact identifier.
 - `max` (optional, default 50): cap on results.
+
+### `get_file_tree`
+
+Return a hierarchical view of the repo's structure (gitignore-aware).
+
+- `path` (optional): repo-relative subdirectory; defaults to root.
+- `max_depth` (optional, default 4): cap on recursion depth.
+- `include_hidden` (optional, default false): include dot-files / dot-dirs (`.git`, `.github`, `.env`, etc.).
+
+Returns a single `FileTreeNode` (the requested root). Children are nested via `FileTreeNode.children`.
+
+### `explain_diff`
+
+Return AST-aligned chunks affected by the diff at `ref`. For each line range that changed in that commit, the chunker is consulted to find the enclosing function / class / method node. Useful for "what does this commit do" questions without reading the raw `git diff` line-by-line.
+
+- `ref` (required): git ref (full SHA, short SHA, `HEAD`, `HEAD~N`, branch name).
+- `max_chunks` (optional, default 50): cap on returned chunks.
+
+Returns `DiffChunk[]`. Each chunk's `change` field is one of `"added"`, `"modified"`, `"deleted"`.
 
 ## Return types
 
@@ -93,6 +114,26 @@ SymbolRef {
   line: int          # 1-indexed.
   snippet: str       # The matching line, trimmed.
 }
+
+FileTreeNode {
+  path: str          # Repo-relative.
+  kind: str          # "file" | "dir".
+  children: FileTreeNode[]   # Empty for files; recursive for dirs (capped by max_depth).
+  size: int | null   # Byte size for files; null for dirs.
+}
+
+DiffFile {
+  path: str          # Repo-relative.
+  hunks: [int, int][]   # Each hunk is [start_line, end_line] in the new file (1-indexed inclusive).
+}
+
+DiffChunk {
+  path: str          # Repo-relative.
+  lines: [int, int]  # 1-indexed inclusive, range of the AST node.
+  snippet: str       # The chunk text.
+  kind: str          # "function" | "class" | "method" | ... | "fragment" (if the chunker fell back to line-window).
+  change: str        # "added" | "modified" | "deleted" — relative to the diff at `ref`.
+}
 ```
 
 `ISO8601` is a type alias for a string in ISO 8601 / RFC 3339 format (e.g., `2026-05-04T10:11:26+02:00`).
@@ -101,4 +142,4 @@ SymbolRef {
 
 This contract is versioned via the document itself. Breaking changes (removing or renaming a tool, adding or promoting a required parameter, removing or renaming a required parameter, changing return type shapes) require a coordinated update with `mcp-core`. Additive changes (new tools, new optional parameters) do not.
 
-The current version is **v1.1** (additive bump in v0.2.0 of `context-template`: adds `find_definition` and `find_references`).
+The current version is **v1.2** (additive bump in v0.3.0 of `context-template`: adds `get_file_tree` and `explain_diff`).
