@@ -81,7 +81,7 @@ graph LR
 <!-- Only if you have the `code-context` MCP installed.
      If not, delete this entire section. -->
 
-You have three tools from the `code-context` MCP server. Use them proactively:
+You have five tools from the `code-context` MCP server. Use them proactively:
 
 - **`search_repo(query, top_k?, scope?)`** — call this BEFORE editing or reading
   large amounts of code. The query should describe the task in natural language.
@@ -94,8 +94,18 @@ You have three tools from the `code-context` MCP server. Use them proactively:
 - **`get_summary(scope?, path?)`** — call ONCE at the start of an unfamiliar
   task to orient yourself. Don't call repeatedly.
 
-Prefer these tools over Glob/Grep when the question is semantic
-("how do we do X") rather than literal ("where is the string Y").
+- **`find_definition(name, language?, max?)`** — locate where a symbol
+  (function, class, method, type) is defined. Use INSTEAD of grepping for
+  `def X` / `class X` / `function X` patterns. Returns repo-relative paths
+  with line ranges and the symbol's kind.
+
+- **`find_references(name, max?)`** — list every line that mentions a
+  named symbol. Use INSTEAD of `grep -n "X"` when the user asks "who calls X?"
+  or "where is X used?". Word-boundary matched, so `log` doesn't return `logger`.
+
+Prefer these tools over Glob/Grep/Bash when the question is semantic
+("how do we do X") or symbol-shaped ("where is X defined / used")
+rather than purely literal ("where is the string Y").
 
 ## 9. References & Memory
 
