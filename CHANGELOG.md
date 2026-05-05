@@ -1,5 +1,17 @@
 # Changelog
 
+## v0.3.0 — 2026-05-05
+
+Tool Protocol contract bump from **v1.1** to **v1.2** (additive — no breaking changes).
+
+- feat(protocol): add `get_file_tree(path?, max_depth?, include_hidden?)` returning `FileTreeNode`. Repo-relative directory tree with gitignore awareness; intended to replace `Bash: ls -R` / `Bash: tree` for orientation prompts.
+- feat(protocol): add `explain_diff(ref, max_chunks?)` returning `DiffChunk[]`. AST-aligned chunks affected by the diff at `ref` (full SHA, `HEAD`, `HEAD~N`, branch); intended to replace `Bash: git show <sha>` for "what does this commit do" questions. Each `DiffChunk.change` is `"added"`, `"modified"`, or `"deleted"`.
+- feat(protocol): three new return types — `FileTreeNode` (path, kind, children, size), `DiffFile` (path, hunks), `DiffChunk` (path, lines, snippet, kind, change) — documented alongside the existing return types.
+- feat(template): `template/CLAUDE.md` §8 grows two bullets describing the new tools, with prescriptive language to nudge Claude away from the Bash fallbacks.
+- test(contract): `EXPECTED_TOOLS` set in `tests/test_contract.py` now includes `get_file_tree` and `explain_diff`. Compatible servers must declare all seven tools.
+
+`code-context` v0.7.0 will be the reference implementation.
+
 ## v0.2.0 — 2026-05-05
 
 Tool Protocol contract bump from **v1** to **v1.1** (additive — no breaking changes).

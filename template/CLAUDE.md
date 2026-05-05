@@ -103,6 +103,17 @@ You have five tools from the `code-context` MCP server. Use them proactively:
   named symbol. Use INSTEAD of `grep -n "X"` when the user asks "who calls X?"
   or "where is X used?". Word-boundary matched, so `log` doesn't return `logger`.
 
+- **`get_file_tree(path?, max_depth?, include_hidden?)`** — repo-relative
+  directory tree, gitignore-aware. Use INSTEAD of `Bash: ls -R` or `Bash: tree`
+  when the user asks "show me the project structure" or "what's in this
+  module?". Defaults to depth 4 and skips hidden / ignored files.
+
+- **`explain_diff(ref, max_chunks?)`** — AST-aligned chunks affected by the
+  diff at `ref` (a SHA, `HEAD`, `HEAD~N`, or branch). Use INSTEAD of
+  `Bash: git show <sha>` when the user asks "what does this commit do?" —
+  the chunker resolves which whole functions / classes were touched, not just
+  raw line additions.
+
 Prefer these tools over Glob/Grep/Bash when the question is semantic
 ("how do we do X") or symbol-shaped ("where is X defined / used")
 rather than purely literal ("where is the string Y").
