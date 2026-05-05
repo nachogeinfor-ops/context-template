@@ -14,7 +14,7 @@ import pytest
 
 # This set is the authoritative declaration of "the contract" — both files
 # (tool-protocol.md and CLAUDE.md §8) must declare exactly these tools.
-EXPECTED_TOOLS = {"search_repo", "recent_changes", "get_summary"}
+EXPECTED_TOOLS = {"search_repo", "recent_changes", "get_summary", "find_definition", "find_references"}
 
 
 def _parse_params(s: str) -> list[tuple[str, bool]]:
